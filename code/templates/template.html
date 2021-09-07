@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<title>Flask Chat</title>
+	</head>
+	<body>
+		<div class="message_holder"></div>
+		<input type="text" id="message"/>
+		<button id="submit">submit</button>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    		<script type="text/javascript">
+			var socket = io.connect("http://localhost:5000");
+			socket.on( 'connect', function(){
+				socket.emit('my event', {data:'connected'})
+			})
+			$('#submit').on( 'click', function(e){
+				e.preventDefault();
+				socket.emit('my event', {data:$("#message").val()});
+				$("#message").val('');
+			})
+			
+			socket.on('response', function(msg){
+				console.log(msg)
+				$('div.message_holder').append('<div><b>'+msg.data+'</div>')
+			})
+		</script>
+	</body>
+</html>
