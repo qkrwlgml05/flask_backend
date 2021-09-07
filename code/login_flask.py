@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config.update(DEBUG=True, JWT_SECRET_KEY="screte key")
 jwt = JWTManager(app)
 
-# conn = pg2.connect(host="mdhidaea.iptime.org", port=21212, dbname="aiadmin")
+# conn = pg2.connect()
 # cur = conn.cursor()
 
 def return_result (subject_id):
@@ -37,7 +37,7 @@ def start():
 @app.route('/login', methods=['POST', 'PUT'])
 def login():
 	input = request.get_json()
-	conn = pg2.connect(host="mdhidaea.iptime.org", port=21212, dbname="aiadmin")
+	conn = pg2.connect()
 	cur = conn.cursor()
 	
 	user_id = input['id']
@@ -71,7 +71,7 @@ def model():
 	
 	input = request.get_json()
 	pat_id = input['pat_id']
-	conn = pg2.connect(host="mdhidaea.iptime.org", port=21212, dbname="aiadmin")
+	conn = pg2.connect()
 	cur = conn.cursor()
 	exestr = "SELECT * FROM core.patients WHERE subject_id='{0}'".format(pat_id)
 	cur.execute(exestr)
